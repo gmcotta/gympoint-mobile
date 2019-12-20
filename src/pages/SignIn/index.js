@@ -1,12 +1,29 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Image } from 'react-native';
 
-// import { Container } from './styles';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Background, Form, FormInput, SignInButton } from './styles';
 
-export default function SignIn() {
+import logo from '~/assets/logo/logo.png';
+
+export default function SignIn({ navigation }) {
   return (
-    <View>
-      <Text>Sign In</Text>
-    </View>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
+      <Background>
+        <Image source={logo} />
+        <Form>
+          <FormInput
+            keyboardType="numeric"
+            placeholder="Your registration ID"
+          />
+          <SignInButton onPress={() => navigation.navigate('CheckIn')}>
+            Sign In
+          </SignInButton>
+        </Form>
+      </Background>
+    </ScrollView>
   );
 }
