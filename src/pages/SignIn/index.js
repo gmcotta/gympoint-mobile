@@ -7,6 +7,9 @@ import { Background, Form, FormInput, SignInButton } from './styles';
 import logo from '~/assets/logo/logo.png';
 
 export default function SignIn({ navigation }) {
+  function handleSubmit() {
+    return navigation.navigate('CheckIn');
+  }
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -19,9 +22,7 @@ export default function SignIn({ navigation }) {
             keyboardType="numeric"
             placeholder="Your registration ID"
           />
-          <SignInButton onPress={() => navigation.navigate('CheckIn')}>
-            Sign In
-          </SignInButton>
+          <SignInButton onPress={handleSubmit}>Sign In</SignInButton>
         </Form>
       </Background>
     </ScrollView>
