@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image } from 'react-native';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
+import { signInRequest } from '~/store/modules/auth/actions';
+
 import { Background, Form, FormInput, SignInButton } from './styles';
 
 import logo from '~/assets/logo/logo.png';
 
-export default function SignIn({ navigation }) {
+export default function SignIn() {
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
+  const [id, setId] = useState(null);
+
   function handleSubmit() {
-    return navigation.navigate('CheckIn');
+    dispatch(signInRequest(id));
   }
+
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -21,8 +28,12 @@ export default function SignIn({ navigation }) {
           <FormInput
             keyboardType="numeric"
             placeholder="Your registration ID"
+            value={id}
+            onChangeText={setId}
           />
-          <SignInButton onPress={handleSubmit}>Sign In</SignInButton>
+          <SignInButton loading={loading} onPress={handleSubmit}>
+            Sign In
+          </SignInButton>
         </Form>
       </Background>
     </ScrollView>
