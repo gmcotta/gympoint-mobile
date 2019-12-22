@@ -10,7 +10,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <StatusBar backgroundColor="fff" />
+        <StatusBar barStyle="dark-content" backgroundColor="white" />
         <ReduxRoutes />
       </PersistGate>
     </Provider>

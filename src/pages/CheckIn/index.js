@@ -1,12 +1,22 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-// import { Container } from './styles';
+import StatusBarLogo from '~/components/StatusBarLogo';
+import { Container } from './styles';
 
 export default function CheckIn() {
   return (
-    <View>
+    <Container>
+      <StatusBarLogo />
       <Text>Check In</Text>
-    </View>
+    </Container>
   );
 }
+
+CheckIn.navigationOptions = {
+  tabBarLabel: 'Check-in',
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="event" size={20} color={tintColor} />
+  ),
+};
