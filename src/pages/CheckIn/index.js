@@ -1,23 +1,57 @@
-import React from 'react';
-import { Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Text, Alert, RefreshControl } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import StatusBarLogo from '~/components/StatusBarLogo';
-
 import CheckInItem from '~/components/CheckInItem';
+
+import api from '~/services/api';
+
 import { Wrapper, Container, SubmitButton, List } from './styles';
 
 export default function CheckIn() {
-  const data = [1, 2, 3, 4, 5, 6, 7];
+  const { id } = useSelector(state => state.user.profile);
+  const [checkin, setCheckin] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function refreshPage() {
+    setRefreshing(true);
+    const { data: response } = await api.get(`students/${id}/checkins`);
+    const newData = response.map(r => ({
+      ...r,
+      index: response.indexOf(r) + 1,
+    }));
+    setCheckin(newData);
+    setRefreshing(false);
+  }
+
+  useEffect(() => {
+    refreshPage();
+  }, []);
+
+  async function handleCheckin() {
+    try {
+      await api.post(`students/${id}/checkins`);
+      refreshPage();
+    } catch (error) {
+      console.tron.warn(error);
+      Alert.alert('Erro');
+    }
+  }
 
   return (
     <Wrapper>
       <StatusBarLogo />
-      <Container>
-        <SubmitButton onPress={() => {}}>New check-in</SubmitButton>
+      <Container
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={refreshPage} />
+        }
+      >
+        <SubmitButton onPress={handleCheckin}>New check-in</SubmitButton>
         <List
-          data={data}
-          keyExtractor={item => String(item)}
+          data={checkin}
+          keyExtractor={item => String(item.id)}
           renderItem={({ item }) => <CheckInItem data={item} />}
         />
       </Container>
