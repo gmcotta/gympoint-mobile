@@ -4,6 +4,7 @@ import { Text, Alert, RefreshControl } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import StatusBarLogo from '~/components/StatusBarLogo';
+import HelpOrderItem from '~/components/HelpOrderItem';
 
 import api from '~/services/api';
 
@@ -43,7 +44,7 @@ export default function HelpOrder() {
           refreshing={refreshing}
           onRefresh={refreshPage}
           keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => <Text>{item.question}</Text>}
+          renderItem={({ item }) => <HelpOrderItem data={item} />}
         />
       </Container>
     </Wrapper>

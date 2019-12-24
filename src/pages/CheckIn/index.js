@@ -58,7 +58,7 @@ export default function CheckIn() {
 }
 
 CheckIn.navigationOptions = {
-  tabBarLabel: 'Check-in',
+  tabBarLabel: 'Check-ins',
   tabBarIcon: ({ tintColor }) => (
     <Icon name="event" size={20} color={tintColor} />
   ),
