@@ -8,10 +8,10 @@ import CheckInItem from '~/components/CheckInItem';
 
 import api from '~/services/api';
 
-import { Wrapper, Container, SubmitButton, List } from './styles';
+import { Container, SubmitButton, List } from './styles';
 
 export default function CheckIn() {
-  const { id } = useSelector(state => state.user.profile);
+  const { id } = useSelector(state => state.user.profile.student);
   const [checkin, setCheckin] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -44,7 +44,7 @@ export default function CheckIn() {
   }
 
   return (
-    <Wrapper>
+    <>
       <StatusBarLogo />
       <Container>
         <SubmitButton onPress={handleCheckin}>New check-in</SubmitButton>
@@ -56,7 +56,7 @@ export default function CheckIn() {
           renderItem={({ item }) => <CheckInItem data={item} />}
         />
       </Container>
-    </Wrapper>
+    </>
   );
 }
 

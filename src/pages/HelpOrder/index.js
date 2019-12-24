@@ -10,7 +10,7 @@ import api from '~/services/api';
 import { Container, SubmitButton, List } from './styles';
 
 export default function HelpOrder({ navigation }) {
-  const { id } = useSelector(state => state.user.profile);
+  const { id } = useSelector(state => state.user.profile.student);
   const [helpOrder, setHelpOrder] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 

@@ -13,6 +13,7 @@ import CheckIn from './pages/CheckIn';
 import HelpOrder from './pages/HelpOrder';
 import ReadHelpOrder from './pages/HelpOrder/ReadHelpOrder';
 import NewHelpOrder from './pages/HelpOrder/NewHelpOrder';
+import Profile from './pages/Profile';
 
 export default (signedIn = false) =>
   createAppContainer(
@@ -44,6 +45,7 @@ export default (signedIn = false) =>
                 ),
               },
             },
+            Profile,
           },
           {
             tabBarOptions: {

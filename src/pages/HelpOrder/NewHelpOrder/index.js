@@ -7,7 +7,7 @@ import api from '~/services/api';
 import { Container, Form, FormInput, SendButton } from './styles';
 
 export default function NewHelpOrder({ navigation }) {
-  const { id } = useSelector(state => state.user.profile);
+  const { id } = useSelector(state => state.user.profile.student);
   const [question, setQuestion] = useState('');
 
   async function handleSubmit() {
