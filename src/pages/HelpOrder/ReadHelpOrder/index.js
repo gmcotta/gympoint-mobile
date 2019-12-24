@@ -1,14 +1,40 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useMemo } from 'react';
+import { parseISO, formatRelative } from 'date-fns';
 
-// import { Container } from './styles';
+import {
+  Container,
+  Card,
+  QuestionArea,
+  Heading,
+  QuestionDate,
+  QuestionText,
+  AnswerArea,
+} from './styles';
 
 export default function ReadHelpOrder({ navigation }) {
-  const { id } = navigation.getParam('item');
+  const { question, createdAt, answer } = navigation.getParam('item');
+
+  const dateParsed = useMemo(() => {
+    return formatRelative(parseISO(createdAt), new Date(), {
+      addSuffix: true,
+    });
+  }, [createdAt]);
+
   return (
-    <View>
-      <Text>Read Help Oreder</Text>
-      <Text>{id}</Text>
-    </View>
+    <Container>
+      <Card>
+        <QuestionArea>
+          <Heading>Question</Heading>
+          <QuestionDate>{dateParsed}</QuestionDate>
+        </QuestionArea>
+        <QuestionText>{question}</QuestionText>
+        {answer && (
+          <AnswerArea>
+            <Heading>Answer</Heading>
+            <QuestionText>{answer}</QuestionText>
+          </AnswerArea>
+        )}
+      </Card>
+    </Container>
   );
 }

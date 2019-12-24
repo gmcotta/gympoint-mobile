@@ -7,7 +7,7 @@ import HelpOrderItem from '~/components/HelpOrderItem';
 
 import api from '~/services/api';
 
-import { Wrapper, Container, SubmitButton, List } from './styles';
+import { Container, SubmitButton, List } from './styles';
 
 export default function HelpOrder({ navigation }) {
   const { id } = useSelector(state => state.user.profile);
@@ -34,27 +34,25 @@ export default function HelpOrder({ navigation }) {
   }
 
   return (
-    <Wrapper>
-      <Container>
-        <SubmitButton onPress={handleNewHelpOrder}>New help order</SubmitButton>
-        <List
-          data={helpOrder}
-          refreshing={refreshing}
-          onRefresh={refreshPage}
-          keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => (
-            <HelpOrderItem
-              onPress={() => {
-                navigation.navigate('ReadHelpOrder', { item });
-              }}
-              data={item}
-            >
-              Teste
-            </HelpOrderItem>
-          )}
-        />
-      </Container>
-    </Wrapper>
+    <Container>
+      <SubmitButton onPress={handleNewHelpOrder}>New help order</SubmitButton>
+      <List
+        data={helpOrder}
+        refreshing={refreshing}
+        onRefresh={refreshPage}
+        keyExtractor={item => String(item.id)}
+        renderItem={({ item }) => (
+          <HelpOrderItem
+            onPress={() => {
+              navigation.navigate('ReadHelpOrder', { item });
+            }}
+            data={item}
+          >
+            Teste
+          </HelpOrderItem>
+        )}
+      />
+    </Container>
   );
 }
 
