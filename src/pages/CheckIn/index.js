@@ -43,14 +43,12 @@ export default function CheckIn() {
   return (
     <Wrapper>
       <StatusBarLogo />
-      <Container
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={refreshPage} />
-        }
-      >
+      <Container>
         <SubmitButton onPress={handleCheckin}>New check-in</SubmitButton>
         <List
           data={checkin}
+          refreshing={refreshing}
+          onRefresh={refreshPage}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => <CheckInItem data={item} />}
         />
