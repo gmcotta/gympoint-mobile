@@ -36,7 +36,10 @@ export default function CheckIn() {
       refreshPage();
     } catch (error) {
       console.tron.warn(error);
-      Alert.alert('Erro');
+      Alert.alert(
+        'Error while check-in',
+        'You may have reached your daily/weekly amount.'
+      );
     }
   }
 

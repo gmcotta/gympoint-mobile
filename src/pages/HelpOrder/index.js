@@ -3,14 +3,13 @@ import { useSelector } from 'react-redux';
 import { Text, Alert, RefreshControl } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import StatusBarLogo from '~/components/StatusBarLogo';
 import HelpOrderItem from '~/components/HelpOrderItem';
 
 import api from '~/services/api';
 
 import { Wrapper, Container, SubmitButton, List } from './styles';
 
-export default function HelpOrder() {
+export default function HelpOrder({ navigation }) {
   const { id } = useSelector(state => state.user.profile);
   const [helpOrder, setHelpOrder] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -30,21 +29,29 @@ export default function HelpOrder() {
     refreshPage();
   }, []);
 
-  async function handleHelpOrder() {
-    console.tron.log('Hi');
+  function handleNewHelpOrder() {
+    navigation.navigate('NewHelpOrder');
   }
 
   return (
     <Wrapper>
-      <StatusBarLogo />
       <Container>
-        <SubmitButton onPress={handleHelpOrder}>New help order</SubmitButton>
+        <SubmitButton onPress={handleNewHelpOrder}>New help order</SubmitButton>
         <List
           data={helpOrder}
           refreshing={refreshing}
           onRefresh={refreshPage}
           keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => <HelpOrderItem data={item} />}
+          renderItem={({ item }) => (
+            <HelpOrderItem
+              onPress={() => {
+                navigation.navigate('ReadHelpOrder', { item });
+              }}
+              data={item}
+            >
+              Teste
+            </HelpOrderItem>
+          )}
         />
       </Container>
     </Wrapper>

@@ -11,7 +11,7 @@ import {
   Question,
 } from './styles';
 
-export default function HelpOrderItem({ data }) {
+export default function HelpOrderItem({ data, ...rest }) {
   const dateParsed = useMemo(() => {
     return formatRelative(parseISO(data.createdAt), new Date(), {
       addSuffix: true,
@@ -19,7 +19,7 @@ export default function HelpOrderItem({ data }) {
   }, [data.createdAt]);
 
   return (
-    <Container>
+    <Container {...rest}>
       <FirstRow>
         <AnswerStatus>
           <Icon
