@@ -33,6 +33,7 @@ export default (signedIn = false) =>
                   headerBackTitleVisible: false,
                   defaultNavigationOptions: {
                     headerTitle: () => <Image source={logo} />,
+                    headerTintColor: '#ee4e62',
                   },
                 }
               ),
