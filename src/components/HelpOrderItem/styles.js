@@ -26,6 +26,10 @@ export const AnswerInfo = styled.Text`
   color: ${props => (props.answer ? '#42cb59' : '#999')};
 `;
 
+export const ItemDate = styled.Text`
+  color: #666;
+`;
+
 export const Question = styled.Text.attrs({
   numberOfLines: 3,
 })`

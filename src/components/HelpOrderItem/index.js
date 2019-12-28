@@ -7,6 +7,7 @@ import {
   Container,
   FirstRow,
   AnswerStatus,
+  ItemDate,
   AnswerInfo,
   Question,
 } from './styles';
@@ -31,7 +32,7 @@ export default function HelpOrderItem({ data, ...rest }) {
             {data.answer ? 'Answered' : 'Not Answered'}
           </AnswerInfo>
         </AnswerStatus>
-        <Text>{dateParsed}</Text>
+        <ItemDate>{dateParsed}</ItemDate>
       </FirstRow>
       <Question>{data.question}</Question>
     </Container>

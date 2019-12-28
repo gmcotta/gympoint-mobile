@@ -18,7 +18,6 @@ export const HeadingArea = styled.View`
   border: 1px solid transparent;
   border-bottom-color: #ee4e62;
   padding: 10px;
-  border-radius: 4px;
 `;
 
 export const Heading = styled.Text`
@@ -30,6 +29,10 @@ export const Heading = styled.Text`
 
 export const Title = styled.Text`
   font-weight: bold;
+`;
+
+export const InfoText = styled.Text`
+  color: #666;
 `;
 
 export const StudentArea = styled.View`

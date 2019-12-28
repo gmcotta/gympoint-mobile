@@ -14,3 +14,7 @@ export const SubmitButton = styled(Button)`
 export const List = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
 })``;
+
+export const CheckInText = styled.Text`
+  text-align: center;
+`;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { format, parseISO } from 'date-fns';
 
@@ -15,6 +14,7 @@ import {
   Heading,
   StudentArea,
   Title,
+  InfoText,
   PlanArea,
   Row,
   LogoutButton,
@@ -57,23 +57,23 @@ export default function Profile() {
           <StudentArea>
             <Row>
               <Title>Name</Title>
-              <Text>{profile.student.name}</Text>
+              <InfoText>{profile.student.name}</InfoText>
             </Row>
             <Row>
               <Title>E-mail</Title>
-              <Text>{profile.student.email}</Text>
+              <InfoText>{profile.student.email}</InfoText>
             </Row>
             <Row>
               <Title>Age</Title>
-              <Text>{formattedAge}</Text>
+              <InfoText>{formattedAge}</InfoText>
             </Row>
             <Row>
               <Title>Weight</Title>
-              <Text>{formattedWeight}</Text>
+              <InfoText>{formattedWeight}</InfoText>
             </Row>
             <Row>
               <Title>Height</Title>
-              <Text>{formattedHeight}</Text>
+              <InfoText>{formattedHeight}</InfoText>
             </Row>
           </StudentArea>
           <HeadingArea>
@@ -82,19 +82,19 @@ export default function Profile() {
           <PlanArea>
             <Row>
               <Title>Title</Title>
-              <Text>{profile.enrollment.Plan.title}</Text>
+              <InfoText>{profile.enrollment.Plan.title}</InfoText>
             </Row>
             <Row>
               <Title>Start date</Title>
-              <Text>{formattedStartDate}</Text>
+              <InfoText>{formattedStartDate}</InfoText>
             </Row>
             <Row>
               <Title>End date</Title>
-              <Text>{formattedEndDate}</Text>
+              <InfoText>{formattedEndDate}</InfoText>
             </Row>
             <Row>
               <Title>Total price</Title>
-              <Text>{formattedPrice}</Text>
+              <InfoText>{formattedPrice}</InfoText>
             </Row>
           </PlanArea>
         </Card>

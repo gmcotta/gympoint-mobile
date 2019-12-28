@@ -15,4 +15,6 @@ export const ItemID = styled.Text`
   font-weight: bold;
 `;
 
-export const ItemDate = styled.Text``;
+export const ItemDate = styled.Text`
+  color: #666;
+`;

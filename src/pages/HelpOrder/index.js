@@ -11,17 +11,17 @@ import { Container, SubmitButton, List } from './styles';
 
 export default function HelpOrder({ navigation }) {
   const { id } = useSelector(state => state.user.profile.student);
+  const [page, setPage] = useState(1);
   const [helpOrder, setHelpOrder] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
   async function refreshPage() {
     setRefreshing(true);
-    const { data: response } = await api.get(`students/${id}/help-orders`);
-    const newData = response.map(r => ({
-      ...r,
-      index: response.indexOf(r) + 1,
-    }));
-    setHelpOrder(newData);
+    setPage(1);
+    const { data: response } = await api.get(`students/${id}/help-orders`, {
+      params: { page },
+    });
+    setHelpOrder(response);
     setRefreshing(false);
   }
 
