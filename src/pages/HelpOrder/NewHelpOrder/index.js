@@ -31,7 +31,7 @@ export default function NewHelpOrder({ navigation }) {
       <Container>
         <Form>
           <FormInput
-            keyboardType="email-address"
+            keyboardType="default"
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="Type your help order"

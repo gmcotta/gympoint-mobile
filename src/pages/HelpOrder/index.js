@@ -12,22 +12,46 @@ import { Container, SubmitButton, List } from './styles';
 export default function HelpOrder({ navigation }) {
   const { id } = useSelector(state => state.user.profile.student);
   const [page, setPage] = useState(1);
+  const [more, setMore] = useState(true);
   const [helpOrder, setHelpOrder] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
+  useEffect(() => {
+    async function loadHelpOrder() {
+      const { data: response } = await api.get(`students/${id}/help-orders`, {
+        params: { page },
+      });
+      setHelpOrder(response);
+    }
+    loadHelpOrder();
+  }, []);
+
   async function refreshPage() {
     setRefreshing(true);
-    setPage(1);
+
+    const firstPage = 1;
     const { data: response } = await api.get(`students/${id}/help-orders`, {
-      params: { page },
+      params: { page: firstPage },
     });
     setHelpOrder(response);
+    setPage(firstPage);
+    setMore(true);
     setRefreshing(false);
   }
 
-  useEffect(() => {
-    refreshPage();
-  }, []);
+  async function loadMore() {
+    const newPage = page + 1;
+    const { data: response } = await api.get(`students/${id}/help-orders`, {
+      params: { page: newPage },
+    });
+    if (more && response.length > 0) {
+      const newData = [...helpOrder, ...response];
+      setHelpOrder(newData);
+      setPage(newPage);
+    } else {
+      setMore(false);
+    }
+  }
 
   function handleNewHelpOrder() {
     navigation.navigate('NewHelpOrder');
@@ -40,6 +64,8 @@ export default function HelpOrder({ navigation }) {
         data={helpOrder}
         refreshing={refreshing}
         onRefresh={refreshPage}
+        onEndReachedThreshold={0.1}
+        onEndReached={loadMore}
         keyExtractor={item => String(item.id)}
         renderItem={({ item }) => (
           <HelpOrderItem
