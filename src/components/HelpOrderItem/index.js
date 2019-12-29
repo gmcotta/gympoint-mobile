@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { parseISO, formatRelative } from 'date-fns';
-import { Text } from 'react-native';
+import { Platform } from 'react-native';
+import { parseISO, formatRelative, subHours } from 'date-fns';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
@@ -13,10 +13,17 @@ import {
 } from './styles';
 
 export default function HelpOrderItem({ data, ...rest }) {
+  const today = new Date();
   const dateParsed = useMemo(() => {
-    return formatRelative(parseISO(data.createdAt), new Date(), {
-      addSuffix: true,
-    });
+    if (Platform.OS === 'ios') {
+      return formatRelative(parseISO(data.createdAt), today, {
+        addSuffix: true,
+      });
+    } else {
+      return formatRelative(subHours(parseISO(data.createdAt), 3), today, {
+        addSuffix: true,
+      });
+    }
   }, [data.createdAt]);
 
   return (

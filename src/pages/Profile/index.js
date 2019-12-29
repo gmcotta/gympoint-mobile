@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { format, parseISO } from 'date-fns';
-
+import { Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOut } from '~/store/modules/auth/actions';
 
@@ -27,10 +27,13 @@ export default function Profile() {
   const formattedAge = `${profile.student.age} years`;
   const formattedWeight = `${profile.student.weight} kg`;
   const formattedHeight = `${profile.student.height} m`;
-  const formattedPrice = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(profile.enrollment.price);
+  const formattedPrice =
+    Platform.OS === 'ios'
+      ? new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(profile.enrollment.price)
+      : `$${profile.enrollment.price}.00`;
 
   const formattedStartDate = format(
     parseISO(profile.enrollment.start_date),
@@ -97,8 +100,8 @@ export default function Profile() {
               <InfoText>{formattedPrice}</InfoText>
             </Row>
           </PlanArea>
+          <LogoutButton onPress={handleLogout}>Logout</LogoutButton>
         </Card>
-        <LogoutButton onPress={handleLogout}>Logout</LogoutButton>
       </Container>
     </>
   );

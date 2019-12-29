@@ -19,40 +19,32 @@ export default function CheckIn() {
   const [checkin, setCheckin] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    console.tron.log('Start');
-    console.tron.log(`Page: ${page}`);
-
-    async function loadCheckin() {
-      const { data: response } = await api.get(`students/${id}/checkins`, {
-        params: { page },
-      });
-      console.tron.log(response);
-      const newData = response.checkins.map(r => ({
-        ...r,
-        index: response.checkins.indexOf(r) + 1,
-      }));
-      setCheckin(newData);
-      setCount(response.count);
-    }
-    loadCheckin();
-  }, []);
-
-  async function refreshPage() {
-    console.tron.log('Trigger refresh');
-    const firstPage = 1;
-    console.tron.log(`Page: ${page}`);
-    setRefreshing(true);
+  async function loadCheckin(currentPage) {
     const { data: response } = await api.get(`students/${id}/checkins`, {
-      params: { page: firstPage },
+      params: { page: currentPage },
     });
+    console.tron.log(response);
     const newData = response.checkins.map(r => ({
       ...r,
       index: response.checkins.indexOf(r) + 1,
     }));
     setCheckin(newData);
-    setPage(firstPage);
     setCount(response.count);
+  }
+
+  useEffect(() => {
+    console.tron.log('Start');
+    console.tron.log(`Page: ${page}`);
+    loadCheckin(page);
+  }, []);
+
+  async function refreshPage() {
+    setRefreshing(true);
+    console.tron.log('Trigger refresh');
+    const firstPage = 1;
+    console.tron.log(`Page: ${page}`);
+    loadCheckin(firstPage);
+    setPage(firstPage);
     setMore(true);
     setRefreshing(false);
   }

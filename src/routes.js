@@ -32,13 +32,20 @@ export default (signedIn = false) =>
                 },
                 {
                   headerBackTitleVisible: false,
+                  headerLayoutPreset: 'center',
                   defaultNavigationOptions: {
                     headerTitle: () => <Image source={logo} />,
                     headerTintColor: '#ee4e62',
+                    headerStyle: {
+                      elevation: 0,
+                    },
                   },
                 }
               ),
               navigationOptions: {
+                header: {
+                  style: { elevation: 0 },
+                },
                 tabBarLabel: 'Help Orders',
                 tabBarIcon: ({ tintColor }) => (
                   <Icon name="live-help" size={20} color={tintColor} />

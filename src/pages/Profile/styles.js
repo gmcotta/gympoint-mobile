@@ -1,13 +1,16 @@
 import styled from 'styled-components/native';
 import Button from '~/components/Button';
 
-export const Container = styled.View`
+export const Container = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+})`
   background-color: #f5f5f5;
   padding: 20px;
   flex: 1;
 `;
 
 export const Card = styled.View`
+  flex: 1;
   padding: 20px;
   background: #fff;
   border: 1px solid #ddd;
