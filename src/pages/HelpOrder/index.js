@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Text, Alert, RefreshControl } from 'react-native';
+import { withNavigationFocus } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import HelpOrderItem from '~/components/HelpOrderItem';
@@ -9,31 +9,31 @@ import api from '~/services/api';
 
 import { Container, SubmitButton, List } from './styles';
 
-export default function HelpOrder({ navigation }) {
+function HelpOrder({ navigation, isFocused }) {
   const { id } = useSelector(state => state.user.profile.student);
   const [page, setPage] = useState(1);
   const [more, setMore] = useState(true);
   const [helpOrder, setHelpOrder] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
+  async function loadHelpOrder(currentPage) {
+    const { data: response } = await api.get(`students/${id}/help-orders`, {
+      params: { page: currentPage },
+    });
+    setHelpOrder(response);
+  }
+
   useEffect(() => {
-    async function loadHelpOrder() {
-      const { data: response } = await api.get(`students/${id}/help-orders`, {
-        params: { page },
-      });
-      setHelpOrder(response);
+    if (isFocused) {
+      loadHelpOrder(page);
     }
-    loadHelpOrder();
-  }, []);
+  }, [isFocused]);
 
   async function refreshPage() {
     setRefreshing(true);
 
     const firstPage = 1;
-    const { data: response } = await api.get(`students/${id}/help-orders`, {
-      params: { page: firstPage },
-    });
-    setHelpOrder(response);
+    loadHelpOrder(firstPage);
     setPage(firstPage);
     setMore(true);
     setRefreshing(false);
@@ -88,3 +88,5 @@ HelpOrder.navigationOptions = {
     <Icon name="live-help" size={20} color={tintColor} />
   ),
 };
+
+export default withNavigationFocus(HelpOrder);

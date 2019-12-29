@@ -12,8 +12,10 @@ import { Container, SubmitButton, List, CheckInText } from './styles';
 
 export default function CheckIn() {
   const { id } = useSelector(state => state.user.profile.student);
+
   const [page, setPage] = useState(1);
   const [more, setMore] = useState(true);
+  const [count, setCount] = useState(0);
   const [checkin, setCheckin] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -25,11 +27,13 @@ export default function CheckIn() {
       const { data: response } = await api.get(`students/${id}/checkins`, {
         params: { page },
       });
+      console.tron.log(response);
       const newData = response.checkins.map(r => ({
         ...r,
         index: response.checkins.indexOf(r) + 1,
       }));
       setCheckin(newData);
+      setCount(response.count);
     }
     loadCheckin();
   }, []);
@@ -48,6 +52,7 @@ export default function CheckIn() {
     }));
     setCheckin(newData);
     setPage(firstPage);
+    setCount(response.count);
     setMore(true);
     setRefreshing(false);
   }
@@ -68,6 +73,7 @@ export default function CheckIn() {
       }));
       setCheckin(newCheckin);
       setPage(newPage);
+      setCount(response.count);
       console.tron.log(`Page: ${page}`);
     } else {
       setMore(false);
@@ -92,6 +98,9 @@ export default function CheckIn() {
     <>
       <StatusBarLogo />
       <Container>
+        <CheckInText>
+          <Text>{`You have made ${count} check-in(s)!`}</Text>
+        </CheckInText>
         <SubmitButton onPress={handleCheckin}>New check-in</SubmitButton>
         <List
           data={checkin}

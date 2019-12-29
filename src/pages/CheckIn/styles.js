@@ -15,6 +15,14 @@ export const List = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
 })``;
 
-export const CheckInText = styled.Text`
-  text-align: center;
+export const CheckInText = styled.View`
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+  border: 1px solid #ee4e62;
+  padding: 8px;
+  background: #fff;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-weight: bold;
 `;
