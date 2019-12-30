@@ -11,45 +11,55 @@ import { Container, SubmitButton, List } from './styles';
 
 function HelpOrder({ navigation, isFocused }) {
   const { id } = useSelector(state => state.user.profile.student);
+
   const [page, setPage] = useState(1);
   const [more, setMore] = useState(true);
   const [helpOrder, setHelpOrder] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-  async function loadHelpOrder(currentPage) {
-    const { data: response } = await api.get(`students/${id}/help-orders`, {
-      params: { page: currentPage },
-    });
-    setHelpOrder(response);
-  }
-
   useEffect(() => {
-    if (isFocused) {
-      loadHelpOrder(page);
+    async function loadHelpOrder() {
+      const { data: response } = await api.get(`students/${id}/help-orders`, {
+        params: { page: 1 },
+      });
+      setHelpOrder(response);
     }
-  }, [isFocused]);
+    if (isFocused) {
+      console.tron.log('Start');
+      loadHelpOrder();
+      setMore(true);
+      setPage(1);
+    }
+  }, [isFocused, id]);
 
   async function refreshPage() {
     setRefreshing(true);
-
+    console.tron.log('Trigger refresh');
     const firstPage = 1;
-    loadHelpOrder(firstPage);
+    const { data: response } = await api.get(`students/${id}/help-orders`, {
+      params: { page: firstPage },
+    });
+    setHelpOrder(response);
     setPage(firstPage);
     setMore(true);
     setRefreshing(false);
   }
 
   async function loadMore() {
+    console.tron.log('Trigger more');
     const newPage = page + 1;
+    console.tron.log(newPage);
     const { data: response } = await api.get(`students/${id}/help-orders`, {
       params: { page: newPage },
     });
     if (more && response.length > 0) {
       const newData = [...helpOrder, ...response];
+      console.tron.log(newData);
       setHelpOrder(newData);
       setPage(newPage);
     } else {
       setMore(false);
+      console.tron.log('Sem item');
     }
   }
 
